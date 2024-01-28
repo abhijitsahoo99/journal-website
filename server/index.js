@@ -16,7 +16,7 @@ app.get('/' , (req, res) => {
     })
 })
 
-mongoose.connect("mongodb+srv://abhijitsahoo:XuangybwBCFnDEuq@cluster0.gwrr0b9.mongodb.net/Journal")
+// mongoose.connect(YOUR_MONGODB_CONNECTION_URL)
 
 app.listen(port, () => {
     console.log(`server listening on port ${port}` );
