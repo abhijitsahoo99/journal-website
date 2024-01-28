@@ -3,6 +3,8 @@ const router = express.Router();
 const {z, ZodError} = require('zod');
 const bcrypt = require('bcrypt');
 const User = require('../db/index')
+const jwt = require('jsonwebtoken');
+const {authenticateJwt , SecretKey } = require('../middleware/auth')
 
 const signupSchema = z.object({
     email: z.string().email(),
@@ -13,8 +15,8 @@ const signupSchema = z.object({
 });
 
 router.post('/signup', async (req, res) => {
-    const username = req.body.username;
-    const user = await User.findOne({ username });
+    const email = req.body.email;
+    const user = await User.findOne({ email });
     if (user) {
         return res.status(403).json({ message: 'User already exists' });
     } 
@@ -41,7 +43,25 @@ router.post('/signup', async (req, res) => {
     
 
 })
+router.post('/signin' , async (req,res) => {
+    const email = req.body.email;
+    const user = await User.findOne({ email });
+    if (user) {
+        const token = jwt.sign({email , role: 'user'}, SecretKey , {expiresIn: '1h'});
+        res.status(200).json({
+            msg: "Welcome back, Signed in successfully" , token
+        })
+    }
+    else {
+        res.status(401).json({
+            msg: "Invalid email and password, Please sign up"
+        });
+    }
+})
 
-
-
+// router.get('/get-all-journals', authenticateJwt, (req, res) => {
+//     res.json({
+//         msg: 'checkpoint-1'
+//     });
+// })
 module.exports = router;
