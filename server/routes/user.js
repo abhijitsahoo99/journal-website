@@ -59,9 +59,9 @@ router.post('/signin' , async (req,res) => {
     }
 })
 
-// router.get('/get-all-journals', authenticateJwt, (req, res) => {
-//     res.json({
-//         msg: 'checkpoint-1'
-//     });
-// })
+router.get('/get-all-journals', authenticateJwt, (req, res) => {
+    res.json({
+        msg: 'checkpoint-1'
+    });
+})
 module.exports = router;
