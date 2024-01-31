@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const {z, ZodError} = require('zod');
 const bcrypt = require('bcrypt');
-const User = require('../db/index')
+const {User} = require('../db/index')
 const jwt = require('jsonwebtoken');
 const {authenticateJwt , SecretKey } = require('../middleware/auth')
 
@@ -46,8 +46,9 @@ router.post('/signup', async (req, res) => {
 router.post('/signin' , async (req,res) => {
     const email = req.body.email;
     const user = await User.findOne({ email });
+    const userId = user._id;
     if (user) {
-        const token = jwt.sign({email , role: 'user'}, SecretKey , {expiresIn: '1h'});
+        const token = jwt.sign({email, userId , role: 'user'}, SecretKey , {expiresIn: '1h'});
         res.status(200).json({
             msg: "Welcome back, Signed in successfully" , token
         })
@@ -59,9 +60,9 @@ router.post('/signin' , async (req,res) => {
     }
 })
 
-router.get('/get-all-journals', authenticateJwt, (req, res) => {
-    res.json({
-        msg: 'checkpoint-1'
-    });
-})
+// router.get('/get-all-journals', authenticateJwt, (req, res) => {
+//     res.json({
+//         msg: 'checkpoint-1'
+//     });
+// })
 module.exports = router;
