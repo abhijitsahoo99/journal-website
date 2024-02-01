@@ -20,6 +20,15 @@ app.get('/' , (req, res) => {
     })
 })
 
+// app.use((err, req, res, next) => {
+//     if (! err) {
+//         return next();
+//     }
+
+//     res.status(500);
+//     res.send('500: Internal server error');
+// });
+
 mongoose.connect(MongoDBURL)
 
 app.listen(port, () => {

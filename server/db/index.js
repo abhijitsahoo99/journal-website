@@ -5,7 +5,6 @@ const userSchema = new mongoose.Schema({
     email : {type: String, required: true, unique: true},
     password : {type : String, required: true},
 });
-
 const userJournalSchema = new mongoose.Schema({
     email : {type: String, required : true},
     _id : {type: mongoose.Schema.Types.ObjectId, ref: 'Users'}, 
@@ -27,3 +26,22 @@ const User = mongoose.model('Users', userSchema);
 const Journal = mongoose.model('Journal', journalSchema);
 
 module.exports = {User, Journal};
+
+
+
+
+
+
+// Learning Purpose; Please Ignore 
+
+// const journalSchema = new mongoose.Schema({
+//     user: {
+//         email: { type: String, required: true },
+//         _id: { type: mongoose.Schema.Types.ObjectId, ref: 'Users', required: true },
+//     },
+//     journal: {
+//         title: { type: String, required: true },
+//         content: { type: String, required: true },
+//         createdAt: { type: Date, default: Date.now },
+//     },
+// });
